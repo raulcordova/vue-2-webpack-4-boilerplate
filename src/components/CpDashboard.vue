@@ -1,10 +1,41 @@
 <template lang="pug">
     div#home_dashboard
-        h2 Home del Dashboard
+        h2 Pokemon: {{nombre}}
+        img.imagen(:src='img')
 </template>
+
+<script>
+import axios from 'axios'
+export default {
+    data: function (){
+        return {
+            nombre: 'Sin Nombre',
+            img: ''
+        }
+    },
+    created: function () {
+        this.getInfo();
+    },
+    methods:{
+        getInfo(){
+            axios.get('/pokemon/1')
+                .then(res => {
+                    this.nombre = res.data.name;
+                    this.img = res.data.sprites.front_default;
+                    console.log(res);
+                })
+                .catch(err => {
+                    reject(err)
+                })            
+        }
+    }   
+}
+</script>
+
 
 <style lang="styl">
     #home_dashboard
-        background-color: black
-        color: white
+        padding: 50px 0
+        .imagen
+            width: 200px
 </style>
