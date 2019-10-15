@@ -4,7 +4,8 @@
     md-app-toolbar.md-large.md-dense.md-primary
       .md-toolbar-row
         .md-toolbar-section-start
-            span.md-title PodCast
+            span.md-title
+                img#logo(src="@/img/logo.svg")
             md-tabs.md-primary
                 md-tab#tab-home(md-label='Marcas')
                 md-tab#tab-pages(md-label='Podcast')
@@ -19,6 +20,8 @@
 </template>
 
 <style lang="styl">
+#logo
+    width: 150px
 .saludo_usuario
     margin: 5px
 </style>
