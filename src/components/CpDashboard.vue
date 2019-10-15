@@ -5,37 +5,39 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
-    data: function (){
-        return {
-            nombre: 'Sin Nombre',
-            img: ''
-        }
-    },
-    created: function () {
-        this.getInfo();
-    },
-    methods:{
-        getInfo(){
-            axios.get('/pokemon/1')
-                .then(res => {
-                    this.nombre = res.data.name;
-                    this.img = res.data.sprites.front_default;
-                    console.log(res);
-                })
-                .catch(err => {
-                    reject(err)
-                })            
-        }
-    }   
-}
+  data: function() {
+    return {
+      nombre: "Sin Nombre",
+      img: ""
+    };
+  },
+  created: function() {
+    this.getInfo();
+  },
+  methods: {
+    getInfo() {
+      axios
+        .get("photos/1")
+        .then(res => {
+          this.nombre = res.data.title;
+          this.img = res.data.url;
+          console.log(res);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    }
+  }
+};
 </script>
 
 
 <style lang="styl">
-    #home_dashboard
-        padding: 50px 0
-        .imagen
-            width: 200px
+#home 
+  dashboard
+    padding: 50px 0 
+  .imagen 
+    width: 200px;
 </style>

@@ -1,5 +1,4 @@
 <template lang="pug">
-    div
-        h1 Empty    
+    div    
         router-view
 </template>

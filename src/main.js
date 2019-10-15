@@ -6,11 +6,15 @@ import axios from "axios";
 // Import Vue App, routes, store
 import App from "./App";
 import routes from "./routes";
-
+import store from './store';
 import VueAxios from "vue-axios";
+import VueMaterial from 'vue-material';
+import 'vue-material/dist/vue-material.min.css';
+import 'vue-material/dist/theme/default.css';
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
+Vue.use(VueMaterial);
 
 // Configure router
 const router = new VueRouter({
@@ -28,5 +32,6 @@ axios.defaults.headers.common["Content-Type"] = "application/json";
 new Vue({
   el: "#app",
   render: h => h(App),
-  router
+  router,
+  store
 });

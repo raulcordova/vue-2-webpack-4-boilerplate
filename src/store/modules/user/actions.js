@@ -11,16 +11,18 @@ export default {
   signIn({ commit, dispatch }, item) {
     return new Promise((resolve, reject) => {
       axios
-        .post("/login", item)
+        //.post("login", item)
+        .get("/users/1", item)
         .then(res => {
-          if (res && res.data.success) {
-            if (res.data.jwt) {
-              commit("setJWT", res.data.jwt);
-              resolve(res);
-            } else {
-              reject(res);
-            }
+          //if (res && res.data.success) {
+          //if (res.data.jwt) {
+          if (res.data.website) {
+            commit("setJWT", res.data.website);//res.data.jwt
+            resolve(res);
+          } else {
+            reject(res);
           }
+          //}
         })
         .catch(err => {
           reject(err);

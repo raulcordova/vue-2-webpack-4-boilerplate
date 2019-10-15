@@ -12,8 +12,7 @@ export default new Vuex.Store({
    * Assign the modules to the store
    */
   modules: {
-    user,
-    bank
+    user
   },
   plugins: [
     createPersistedState({

@@ -18,8 +18,8 @@ const routes = [
     ]
   },
   {
-    path: "/medium",
-    name: "Medium",
+    path: "/dashboard",
+    name: "Dashboard",
     component: LyDashboard,
     children: [
       {
