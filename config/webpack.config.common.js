@@ -19,8 +19,7 @@ const webpackConfig = {
     }
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
         loader: 'url-loader?limit=100000'
       },
@@ -38,7 +37,12 @@ const webpackConfig = {
         test: /\.css$/,
         use: [
           isDev ? "vue-style-loader" : MiniCSSExtractPlugin.loader,
-          { loader: "css-loader", options: { sourceMap: isDev } }
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: isDev
+            }
+          }
         ]
       },
       {
@@ -53,7 +57,10 @@ const webpackConfig = {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new HtmlPlugin({ template: "index.html", chunksSortMode: "dependency" })
+    new HtmlPlugin({
+      template: "index.html",
+      chunksSortMode: "dependency"
+    })
   ]
 };
 

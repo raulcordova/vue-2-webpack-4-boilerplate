@@ -1,14 +1,13 @@
 <template lang="pug">
     div
-        cp-form-login
+        cp-welcome
 </template>
 
 <script>
-import CpFormLogin from '@/components/CpFormLogin'
+import CpWelcome from "@/components/CpWelcome";
 export default {
   components: {
-    CpFormLogin
-  }    
-}
- 
+    CpWelcome
+  }
+};
 </script>
