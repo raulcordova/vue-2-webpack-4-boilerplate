@@ -1,11 +1,22 @@
 <template lang="pug">
     div#welcome
-        img#logo(src="@/img/logo.svg")
+        img#logoWelcome(src="@/img/logo.svg")
         md-progress-spinner(md-mode="indeterminate")
 </template>
 <script>
 export default {
-  components: {}
+  components: {},
+  created: function() {
+    this.redirectDashboard();
+  },
+  methods: {
+    redirectDashboard() {
+      let self = this;
+      setTimeout(function() {
+        self.$router.push("/dashboard");
+      }, 3000);
+    }
+  }
 };
 </script>
 <style lang="stylus">
@@ -17,7 +28,7 @@ export default {
     align-items center
     background-color #448aff
     flex-direction column
-#logo
+#logoWelcome
     width 300px
     margin-bottom 20px
 .md-progress-spinner-circle

@@ -20,36 +20,36 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 export default {
   data: function() {
     return {
       login: {
-          email: "",
-          password: ""
+        email: "",
+        password: ""
       },
       loading: false
     };
   },
   methods: {
-      ...mapActions('user', ['signIn']),
-      async onSubmit(evt){
-          this.loading = true;
-          this.signIn(this.login)
-          .then((res) => {
-            this.loading = false
-            console.log(res.data)
-            this.$router.push('/dashboard')
-            //if (res.data.success) {
-            //  this.$router.push('/dashboard')
-            //}
-          })
-          .catch(() => {
-            this.loading = false
-          })
-      }
+    ...mapActions("user", ["signIn"]),
+    async onSubmit(evt) {
+      this.loading = true;
+      this.signIn(this.login)
+        .then(res => {
+          this.loading = false;
+          console.log(res.data);
+          this.$route.push("/dashboard");
+          //if (res.data.success) {
+          //  this.$router.push('/dashboard')
+          //}
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+    }
   }
-}
+};
 </script>
 
 <style lang="styl">
