@@ -6,5 +6,6 @@
  */
 
 export default {
-  jwt: null
+  jwt: null,
+  viewHamburgerMenu: false
 };

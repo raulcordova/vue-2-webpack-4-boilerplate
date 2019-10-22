@@ -9,5 +9,8 @@
 export default {
   jwt: state => {
     return state.jwt;
+  },
+  viewHamburgerMenu: state => {
+    return state.viewHamburgerMenu;
   }
 };

@@ -1,6 +1,5 @@
 <template lang="pug">
-    div
-      cp-welcome
+  cp-welcome
 </template>
 
 <script>
