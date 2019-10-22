@@ -9,4 +9,5 @@ export default {
   jwt: null,
   viewHamburgerMenu: false,
   showBrandModal: false,
+  loading: false,
 };

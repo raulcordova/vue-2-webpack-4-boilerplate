@@ -18,5 +18,8 @@ export default {
   },
   changeShowBrandModal(state) {
     state.showBrandModal = !state.showBrandModal;
+  },
+  changeLoader(state) {
+    state.loading = !state.loading;
   }
 };

@@ -31,9 +31,11 @@ export default {
   methods: {
     ...mapActions("brand", ["getList"]),
     async setList() {
+      this.$store.commit("user/changeLoader");
       this.getList()
         .then(res => {
           this.arListBrands = res.data.data;
+          this.$store.commit("user/changeLoader");
         })
         .catch(() => {});
     },

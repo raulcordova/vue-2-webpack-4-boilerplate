@@ -15,5 +15,8 @@ export default {
   },
   showBrandModal: state => {
     return state.showBrandModal;
+  },
+  showLoading: state => {
+    return state.loading;
   }
 };

@@ -1,5 +1,6 @@
 <template lang="pug">
 .page-container
+  CpLoading(v-show="showLoading")
   md-app(md-waterfall='' md-mode='fixed')
     md-app-toolbar.md-large.md-dense.md-primary
       CpHeader
@@ -13,8 +14,9 @@
 import { mapGetters } from "vuex";
 import CpHeader from "@/components/header/CpHeader";
 import CpHamburgerMenu from "@/components/header/CpHamburgerMenu";
+import CpLoading from "@/components/CpLoading";
 export default {
-  components: { CpHeader, CpHamburgerMenu },
+  components: { CpHeader, CpHamburgerMenu, CpLoading },
   data() {
     return {};
   },
@@ -26,6 +28,11 @@ export default {
       // setter
       set: function(newValue) {
         this.$store.commit("user/changeViewHamburgerMenu");
+      }
+    },
+    showLoading: {
+      get: function() {
+        return this.$store.state.user.loading;
       }
     }
   }
