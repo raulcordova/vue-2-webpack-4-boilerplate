@@ -6,7 +6,7 @@
       CpModuloBase(titleModule='Marcas',labelModule='Crear tu primera marca',descriptionModule='Registra aquí las marca del grupo EL COMERCIO', buttonModule='Crear tu primera marca',:arListItems="arListBrands", :openModal='switchShowBrandModal')
         div.md-layout
           template(v-for="item in arListBrands")
-            CpBrand(:title="item.name",:imagen="item.icon", icono='branding_watermark')
+            CpBrand(:title="item.name",:image="item.icon",:date="item.date_register", icon='branding_watermark')
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
@@ -37,7 +37,9 @@ export default {
           this.arListBrands = res.data.data;
           this.$store.commit("user/changeLoader");
         })
-        .catch(() => {});
+        .catch(() => {
+          this.arListBrands = res.data.data;
+        });
     },
     switchShowBrandModal() {
       this.$store.commit("brand/changeShowBrandModal");

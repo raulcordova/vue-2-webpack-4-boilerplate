@@ -1,13 +1,14 @@
 <template lang="pug">
-    CpItemBase(:title='title' :imagen='imagen' :icono='icono')
+    CpItemBase(:title='title' :image='image' :icon='icon', :date='date')
 </template>
 <script>
 import CpItemBase from "@/components/base/modulo/CpItemBase";
 export default {
   props: {
     title: {},
-    imagen: {},
-    icono: {}
+    image: {},
+    icon: {},
+    date: {}
   },
   components: { CpItemBase }
 };
