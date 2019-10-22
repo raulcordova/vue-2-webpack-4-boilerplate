@@ -15,5 +15,8 @@ export default {
   },
   changeViewHamburgerMenu(state) {
     state.viewHamburgerMenu = !state.viewHamburgerMenu;
+  },
+  changeShowBrandModal(state) {
+    state.showBrandModal = !state.showBrandModal;
   }
 };

@@ -7,5 +7,6 @@
 
 export default {
   jwt: null,
-  viewHamburgerMenu: false
+  viewHamburgerMenu: false,
+  showBrandModal: false,
 };

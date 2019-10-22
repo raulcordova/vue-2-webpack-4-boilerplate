@@ -12,5 +12,8 @@ export default {
   },
   viewHamburgerMenu: state => {
     return state.viewHamburgerMenu;
+  },
+  showBrandModal: state => {
+    return state.showBrandModal;
   }
 };
