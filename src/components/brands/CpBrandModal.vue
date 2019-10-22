@@ -8,8 +8,8 @@
         label Nombre
         md-input(v-model='brand.name')
       md-field
-        label Logo
-        md-file(v-model='brand.logo')                  
+        label Url del logo
+        md-input(v-model='brand.logo')                  
 </template>
 <script>
 import CpModalBase from "@/components/base/modulo/CpModalBase";

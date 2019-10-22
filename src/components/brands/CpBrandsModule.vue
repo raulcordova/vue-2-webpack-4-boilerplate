@@ -4,14 +4,17 @@
         md-icon add 
       CpBrandModal(:showDialog='showDialog',:closeDialog='switchShowBrandModal')
       CpModuloBase(titleModule='Marcas',labelModule='Crear tu primera marca',descriptionModule='Registra aquí las marca del grupo EL COMERCIO', buttonModule='Crear tu primera marca',:arListItems="arListBrands", :openModal='switchShowBrandModal')
-        h1 Aquí debe ir el componente que muestra la lista de Items
+        div.md-layout
+          template(v-for="item in arListBrands")
+            CpBrand(:title="item.name",:imagen="item.icon", icono='branding_watermark')
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import CpModuloBase from "@/components/base/modulo/CpModuloBase";
 import CpBrandModal from "@/components/brands/CpBrandModal";
+import CpBrand from "@/components/brands/CpBrand";
 export default {
-  components: { CpModuloBase, CpBrandModal },
+  components: { CpModuloBase, CpBrandModal, CpBrand },
   data: function() {
     return {
       arListBrands: []
@@ -19,12 +22,23 @@ export default {
   },
   computed: {
     ...mapGetters({
-      showDialog: "user/showBrandModal"
+      showDialog: "brand/showBrandModal"
     })
   },
+  created: function() {
+    this.setList();
+  },
   methods: {
+    ...mapActions("brand", ["getList"]),
+    async setList() {
+      this.getList()
+        .then(res => {
+          this.arListBrands = res.data.data;
+        })
+        .catch(() => {});
+    },
     switchShowBrandModal() {
-      this.$store.commit("user/changeShowBrandModal");
+      this.$store.commit("brand/changeShowBrandModal");
     }
   }
 };

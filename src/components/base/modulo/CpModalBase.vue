@@ -31,3 +31,9 @@ export default {
   methods: {}
 };
 </script>
+<style lang="stylus">
+.md-dialog-title
+  background-color #ea0c90
+  color white
+  padding 10px !important
+</style>

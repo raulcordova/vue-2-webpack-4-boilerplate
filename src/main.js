@@ -16,6 +16,17 @@ Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(VueMaterial);
 
+
+const filter = function (text, length, clamp) {
+  clamp = clamp || '...';
+  var node = document.createElement('div');
+  node.innerHTML = text;
+  var content = node.textContent;
+  return content.length > length ? content.slice(0, length) + clamp : content;
+};
+
+Vue.filter('truncate', filter);
+
 // Configure router
 const router = new VueRouter({
   routes,

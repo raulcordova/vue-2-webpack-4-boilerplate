@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     getInfo() {
-      axios
+      /*axios
         .get("photos/1")
         .then(res => {
           this.nombre = res.data.title;
@@ -27,7 +27,7 @@ export default {
         })
         .catch(err => {
           reject(err);
-        });
+        });*/
     }
   }
 };
