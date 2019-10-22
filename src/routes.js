@@ -3,6 +3,7 @@ import LyDashboard from "@/layouts/LyDashboard";
 
 import VwHome from "@/views/VwHome";
 import VwDashboardHome from "@/views/VwDashboardHome";
+import VwBrands from '@/views/VwBrands';
 
 const routes = [{
     path: "/",
@@ -19,10 +20,16 @@ const routes = [{
     name: "Dashboard",
     component: LyDashboard,
     children: [{
-      path: "",
-      name: "FormLogin",
-      component: VwDashboardHome
-    }]
+        path: "",
+        name: "DashboardHome",
+        component: VwDashboardHome
+      },
+      {
+        path: "brands",
+        name: "Brands",
+        component: VwBrands
+      }
+    ]
   }
 ];
 
