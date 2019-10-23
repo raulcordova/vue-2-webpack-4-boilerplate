@@ -6,7 +6,7 @@
       CpModuloBase(titleModule='Marcas',labelModule='Crear tu primera marca',descriptionModule='Registra aquí las marca del grupo EL COMERCIO', buttonModule='Crear tu primera marca',:arListItems="arListBrands", :openModal='switchShowBrandModal')
         div.md-layout
           template(v-for="item in arListBrands")
-            CpBrand(:title="item.name",:image="item.icon",:date="item.date_register", icon='branding_watermark')
+            CpBrand(:item="item" :title="item.name",:image="item.icon",:date="item.date_register", icon='branding_watermark' :setBrandEdit="setBrandEdit")
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
@@ -16,14 +16,15 @@ import CpBrand from "@/components/brands/CpBrand";
 export default {
   components: { CpModuloBase, CpBrandModal, CpBrand },
   data: function() {
+    let brand = this.setDefaultBrand();
     return {
-      arListBrands: []
+      arListBrands: [],
+      brand: brand
     };
   },
   computed: {
     ...mapGetters({
-      showDialog: "brand/showBrandModal",
-      brand: "brand/getBrand"
+      showDialog: "brand/showBrandModal"
     })
   },
   created: function() {
@@ -46,8 +47,20 @@ export default {
       this.$store.commit("brand/changeShowBrandModal");
     },
     addBrandModal() {
-      this.$store.commit("brand/emptyBrand");
+      this.brand = this.setDefaultBrand();
       this.switchShowBrandModal();
+    },
+    setBrandEdit(brand) {
+      this.brand = brand;
+    },
+    setDefaultBrand() {
+      return {
+        cod_brand: "",
+        name: "",
+        icon: "",
+        code: "",
+        date_register: ""
+      };
     }
   }
 };

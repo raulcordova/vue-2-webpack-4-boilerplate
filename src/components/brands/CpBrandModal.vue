@@ -58,7 +58,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("brand", ["add"]),
+    ...mapActions("brand", ["add", "edit"]),
     getValidationClass(fieldName) {
       const field = this.$v.brand[fieldName];
       if (field) {
@@ -72,16 +72,29 @@ export default {
 
       if (!this.$v.$invalid) {
         this.$store.commit("user/changeLoader");
-        this.add(this.brand)
-          .then(res => {
-            this.$store.commit("user/changeLoader");
-            this.closeDialog();
-            this.getListBrands();
-          })
-          .catch(() => {
-            this.$store.commit("user/changeLoader");
-            console.log("Error agregar brand");
-          });
+        if (this.brand.cod_brand == "") {
+          this.add(this.brand)
+            .then(res => {
+              this.$store.commit("user/changeLoader");
+              this.closeDialog();
+              this.getListBrands();
+            })
+            .catch(() => {
+              this.$store.commit("user/changeLoader");
+              console.log("Error agregar brand");
+            });
+        } else {
+          this.edit(this.brand)
+            .then(res => {
+              this.$store.commit("user/changeLoader");
+              this.closeDialog();
+              this.getListBrands();
+            })
+            .catch(() => {
+              this.$store.commit("user/changeLoader");
+              console.log("Error agregar brand");
+            });
+        }
       }
     },
     closeDialogBrand() {

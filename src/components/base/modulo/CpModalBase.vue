@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  md-dialog(:md-active.sync='showDialog',:md-click-outside-to-close='false',:md-close-on-esc='false')
+  md-dialog(:md-active.sync='showDialog',:md-click-outside-to-close='false',:md-close-on-esc='false',:md-closed='closeDialog')
     md-dialog-title {{modalTitle}}
     md-dialog-content
         slot
@@ -33,6 +33,8 @@ export default {
 };
 </script>
 <style lang="stylus">
+.md-dialog
+  min-width 550px !important
 .md-dialog-title
   background-color #ea0c90
   color white

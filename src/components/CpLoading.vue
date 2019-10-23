@@ -11,7 +11,7 @@ export default {
 <style lang="stylus">
 #loading
     width 100vw
-    height calc(100vh - 96px) 
+    height 100vh
     display flex
     justify-content center
     align-items center
@@ -19,7 +19,7 @@ export default {
     flex-direction column
     left 0
     bottom 0
-    position absolute
+    position fixed
     z-index 20
 #logoLoading
     width 300px

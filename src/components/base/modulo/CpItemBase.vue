@@ -16,7 +16,7 @@
                         md-button.md-icon-button(md-menu-trigger='')
                             md-icon more_vert
                         md-menu-content
-                            md-menu-item
+                            md-menu-item(@click="editAction")
                                 span Editar
                                 md-icon edit
                             md-menu-item
@@ -39,7 +39,8 @@ export default {
     },
     date: {
       default: ""
-    }
+    },
+    editAction: {}
   }
 };
 </script>

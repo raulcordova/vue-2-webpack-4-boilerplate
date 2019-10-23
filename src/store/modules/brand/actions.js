@@ -49,6 +49,27 @@ export default {
           reject(err);
         });
     });
-  }
+  },
+  edit({
+    commit,
+    dispatch
 
+  }, brand) {
+    return new Promise((resolve, reject) => {
+      axios
+        .put("/brand/update?cod_brand=" + brand.cod_brand, brand)
+        .then(res => {
+          console.log(res.data);
+          if (res.data.data) {
+            resolve(res);
+          } else {
+            reject(res);
+          }
+          //}
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
 };
