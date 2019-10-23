@@ -1,8 +1,8 @@
 <template lang="pug">
     div
-      md-button.md-icon-button.md-raised.button_add_item(@click='switchShowBrandModal')
+      md-button.md-icon-button.md-raised.button_add_item(@click='addBrandModal')
         md-icon add 
-      CpBrandModal(:showDialog='showDialog',:closeDialog='switchShowBrandModal')
+      CpBrandModal(:showDialog='showDialog',:closeDialog='switchShowBrandModal',:brand='brand',:getListBrands='setList')
       CpModuloBase(titleModule='Marcas',labelModule='Crear tu primera marca',descriptionModule='Registra aquí las marca del grupo EL COMERCIO', buttonModule='Crear tu primera marca',:arListItems="arListBrands", :openModal='switchShowBrandModal')
         div.md-layout
           template(v-for="item in arListBrands")
@@ -22,7 +22,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      showDialog: "brand/showBrandModal"
+      showDialog: "brand/showBrandModal",
+      brand: "brand/getBrand"
     })
   },
   created: function() {
@@ -43,6 +44,10 @@ export default {
     },
     switchShowBrandModal() {
       this.$store.commit("brand/changeShowBrandModal");
+    },
+    addBrandModal() {
+      this.$store.commit("brand/emptyBrand");
+      this.switchShowBrandModal();
     }
   }
 };

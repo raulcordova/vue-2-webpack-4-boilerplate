@@ -10,7 +10,7 @@ import axios from "axios";
 export default {
   getList({
     commit,
-    dispatch
+    dispatch,
   }) {
     return new Promise((resolve, reject) => {
       axios
@@ -27,5 +27,28 @@ export default {
           reject(err);
         });
     });
+  },
+  add({
+    commit,
+    dispatch
+
+  }, brand) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/brand/register", brand)
+        .then(res => {
+          console.log(res.data);
+          if (res.data.data) {
+            resolve(res);
+          } else {
+            reject(res);
+          }
+          //}
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
   }
+
 };

@@ -7,4 +7,11 @@
 
 export default {
   showBrandModal: false,
+  brand: {
+    cod_brand: '',
+    name: '',
+    icon: '',
+    code: '',
+    date_register: ''
+  }
 };

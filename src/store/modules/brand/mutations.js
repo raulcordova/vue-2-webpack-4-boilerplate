@@ -9,5 +9,17 @@
 export default {
   changeShowBrandModal(state) {
     state.showBrandModal = !state.showBrandModal;
+  },
+  emptyBrand(state) {
+    state.brand = {
+      cod_brand: '',
+      name: '',
+      icon: '',
+      code: '',
+      date_register: ''
+    };
+  },
+  setBrand(state, payload) {
+    state.brand = payload;
   }
 };

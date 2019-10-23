@@ -6,7 +6,7 @@ div
         slot
     md-dialog-actions
       md-button.md-primary(@click='closeDialog') {{buttonClose}}
-      md-button.md-primary(@click='closeDialog') {{buttonAction}}   
+      md-button.md-primary(@click='actionDialog') {{buttonAction}}   
 </template>
 <script>
 export default {
@@ -26,7 +26,8 @@ export default {
       type: String,
       default: "Guardar"
     },
-    closeDialog: {}
+    closeDialog: {},
+    actionDialog: {}
   },
   methods: {}
 };

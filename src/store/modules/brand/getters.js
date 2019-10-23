@@ -9,5 +9,8 @@
 export default {
   showBrandModal: state => {
     return state.showBrandModal;
+  },
+  getBrand: state => {
+    return state.brand;
   }
 };
