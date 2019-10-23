@@ -12,5 +12,14 @@ export default {
   },
   clear(state) {
     state.jwt = null;
+  },
+  changeViewHamburgerMenu(state) {
+    state.viewHamburgerMenu = !state.viewHamburgerMenu;
+  },
+  changeShowBrandModal(state) {
+    state.showBrandModal = !state.showBrandModal;
+  },
+  changeLoader(state) {
+    state.loading = !state.loading;
   }
 };

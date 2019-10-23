@@ -1,12 +1,12 @@
 <template lang="pug">
-  cp-dashboard
+  cp-welcome
 </template>
 
 <script>
-import CpDashboard from "@/components/CpDashboard";
+import CpWelcome from "@/components/CpWelcome";
 export default {
   components: {
-    CpDashboard
+    CpWelcome
   }
 };
 </script>

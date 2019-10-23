@@ -7,16 +7,7 @@
  */
 
 export default {
-  jwt: state => {
-    return state.jwt;
-  },
-  viewHamburgerMenu: state => {
-    return state.viewHamburgerMenu;
-  },
   showBrandModal: state => {
     return state.showBrandModal;
-  },
-  showLoading: state => {
-    return state.loading;
   }
 };

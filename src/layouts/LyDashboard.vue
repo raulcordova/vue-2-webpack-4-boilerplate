@@ -1,27 +1,46 @@
 <template lang="pug">
 .page-container
-  md-app(md-waterfall='' md-mode='fixed-last')
+  CpLoading(v-show="showLoading")
+  md-app(md-waterfall='' md-mode='fixed')
     md-app-toolbar.md-large.md-dense.md-primary
-      .md-toolbar-row
-        .md-toolbar-section-start
-            span.md-title
-                img#logo(src="@/img/logo.svg")
-            md-tabs.md-primary
-                md-tab#tab-home(md-label='Marcas')
-                md-tab#tab-pages(md-label='Podcast')
-        .md-toolbar-section-end
-            div
-                md-avatar.md-avatar-icon
-                    md-icon person
-                span.saludo_usuario Hola, Renzo Carpio
-                md-icon exit_to_app
+      CpHeader
+    md-app-drawer(:md-active.sync='menuVisible')
+      md-toolbar.md-transparent(md-elevation='0') Menú
+      CpHamburgerMenu   
     md-app-content
         router-view
 </template>
-
+<script>
+import { mapGetters } from "vuex";
+import CpHeader from "@/components/header/CpHeader";
+import CpHamburgerMenu from "@/components/header/CpHamburgerMenu";
+import CpLoading from "@/components/CpLoading";
+export default {
+  components: { CpHeader, CpHamburgerMenu, CpLoading },
+  data() {
+    return {};
+  },
+  computed: {
+    menuVisible: {
+      get: function() {
+        return this.$store.state.user.viewHamburgerMenu;
+      },
+      // setter
+      set: function(newValue) {
+        this.$store.commit("user/changeViewHamburgerMenu");
+      }
+    },
+    showLoading: {
+      get: function() {
+        return this.$store.state.user.loading;
+      }
+    }
+  }
+};
+</script>
 <style lang="styl">
 #logo
-    width: 150px
+    width 150px
 .saludo_usuario
-    margin: 5px
+    margin 5px
 </style>
