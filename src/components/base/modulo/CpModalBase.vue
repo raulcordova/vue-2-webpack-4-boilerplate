@@ -34,9 +34,9 @@ export default {
 </script>
 <style lang="stylus">
 .md-dialog
-  min-width 550px !important
+  width 40vw !important
 .md-dialog-title
-  background-color #ea0c90
+  background-color #2e86de
   color white
   padding 10px !important
 </style>

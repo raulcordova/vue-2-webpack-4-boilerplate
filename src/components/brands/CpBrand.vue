@@ -1,5 +1,5 @@
 <template lang="pug">
-    CpItemBase(item='item' :title='title' :image='image' :icon='icon', :date='date' :editAction='showModalEdit')
+    CpItemBase(item='item' :title='title' :image='image' :icon='icon', :date='date' :editAction='showModalEdit' :deleteAction='showDeleteConfirm')
 </template>
 <script>
 import CpItemBase from "@/components/base/modulo/CpItemBase";
@@ -17,7 +17,8 @@ export default {
     icon: {},
     date: {},
     editAction: {},
-    setBrandEdit: {}
+    setBrandEdit: {},
+    setBrandDelete: {}
   },
   methods: {
     showModalEdit() {
@@ -25,6 +26,9 @@ export default {
       let itemEdit = Object.assign({}, this.item);
       this.setBrandEdit(itemEdit);
       this.$store.commit("brand/changeShowBrandModal");
+    },
+    showDeleteConfirm() {
+      this.setBrandDelete(this.item);
     }
   }
 };

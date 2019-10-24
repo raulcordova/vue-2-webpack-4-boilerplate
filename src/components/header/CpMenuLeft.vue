@@ -4,7 +4,7 @@
         md-icon menu
     span.md-title
         img#logo(src="@/img/logo.svg")
-    md-tabs.md-primary
+    md-tabs.md-xsmall-hide.md-primary
         md-tab#tab-home(md-label='Podcast')
         md-tab#tab-pages(md-label='Marcas', to='/dashboard/brands')
 </template>

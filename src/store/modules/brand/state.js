@@ -7,6 +7,7 @@
 
 export default {
   showBrandModal: false,
+  showConfirmModal: false,
   brand: {
     cod_brand: '',
     name: '',

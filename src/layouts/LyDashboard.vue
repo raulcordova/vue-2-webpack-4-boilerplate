@@ -1,6 +1,6 @@
 <template lang="pug">
 .page-container
-  md-snackbar(:md-active.sync="showSnackbar" md-position="left" md-duration=3000  md-persistent) Mensaje !
+  md-snackbar(:md-active.sync="showSnackbar" md-position="left"  md-persistent) Mensaje !
     md-button.md-primary(@click='showSnackbar = false') Ocultar
   CpLoading(v-show="showLoading")
   md-app(md-waterfall='' md-mode='fixed')
@@ -44,7 +44,7 @@ export default {
 </script>
 <style lang="styl">
 #logo
-    width 150px
+    width 200px
 .saludo_usuario
-    margin 5px
+    margin 5px  
 </style>

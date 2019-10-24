@@ -1,5 +1,5 @@
 <template lang="pug">
-.md-layout-item.md-size-20
+.md-layout-item.md-size-20.md-small-size-33.md-xsmall-size-100
     md-card
         md-card-media-cover(md-solid='')
             md-card-media(md-ratio='1:1')
@@ -17,11 +17,11 @@
                             md-icon more_vert
                         md-menu-content
                             md-menu-item(@click="editAction")
-                                span Editar
                                 md-icon edit
-                            md-menu-item
-                                span Eliminar
+                                span Editar
+                            md-menu-item(@click="deleteAction")
                                 md-icon delete
+                                span Eliminar
 </template>
 
 <script>
@@ -40,20 +40,25 @@ export default {
     date: {
       default: ""
     },
-    editAction: {}
+    editAction: {},
+    deleteAction: {}
   }
 };
 </script>
-<style lang="styl" scoped>
+<style lang="styl">
 .md-layout-item
-    margin-bottom: 40px
+    margin-bottom 40px
+    .md-card-header
+        padding 10px 16px
     .md-card-area
-        height: 80px !important
-        background-color: #0855c4 !important
+        height: 60px !important
+        background-color #576574 !important
     .md-title
-        font-size: 15px !important
-        line-height: 22px !important
-        margin-top: 0 !important
+        font-size 15px !important
+        line-height 22px !important
+        margin-top 0 !important
+        .md-icon
+            font-size 16px !important
     .md-subhead
         font-size: 11px !important
 .icono-blanco
@@ -64,5 +69,14 @@ export default {
     &.md-card-header+.md-card-actions
         bottom 0
         right 0
-        position absolute                
+        position absolute
+.md-card-media.md-ratio-1-1 
+    img
+        top 0 !important
+        transform none !important
+.md-list-item-content
+    justify-content start !important
+    .md-icon                                      
+        font-size 20px !important
+        margin-right 5px !important
 </style>

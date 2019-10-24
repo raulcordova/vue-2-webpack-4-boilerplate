@@ -1,6 +1,7 @@
 <template lang="pug">
     div
-        h1 {{titleModule}}
+        div.md-layout
+          h1 {{titleModule}}
         md-empty-state(v-if='showViewEmpty()' md-icon='branding_watermark' :md-label='labelModule' :md-description='descriptionModule')
             md-button.md-primary.md-raised(@click='openModal') {{buttonModule}}
         slot(v-else)
@@ -36,10 +37,13 @@ export default {
 </script>
 <style lang="stylus">
 .button_add_item
-  background-color #EA0C90 !important
-  right 20px
-  top 75px
+  background-color #2e86de !important
+  right 50px
+  top 65px
   position absolute !important
+  width 54px !important
+  height 54px !important  
   .md-icon-font
     color: white !important
+    font-size 30px !important
 </style>

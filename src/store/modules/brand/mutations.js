@@ -10,6 +10,9 @@ export default {
   changeShowBrandModal(state) {
     state.showBrandModal = !state.showBrandModal;
   },
+  changeShowConfirmModal(state) {
+    state.showConfirmModal = !state.showConfirmModal;
+  },
   emptyBrand(state) {
     state.brand = {
       cod_brand: '',
