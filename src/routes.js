@@ -4,9 +4,10 @@ import LyDashboard from "@/layouts/LyDashboard";
 import VwHome from "@/views/VwHome";
 import VwDashboardHome from "@/views/VwDashboardHome";
 import VwBrands from '@/views/VwBrands';
+import VwEpisodes from "@/views/VwEpisodes";
 
 const routes = [{
-    path: "/",
+    path: "/login",
     name: "Home",
     component: LyEmpty,
     children: [{
@@ -16,7 +17,7 @@ const routes = [{
     }]
   },
   {
-    path: "/dashboard",
+    path: "/",
     name: "Dashboard",
     component: LyDashboard,
     children: [{
@@ -28,6 +29,11 @@ const routes = [{
         path: "brands",
         name: "Brands",
         component: VwBrands
+      },
+      {
+        path: "podcast/episodes",
+        name: "Episodes",
+        component: VwEpisodes
       }
     ]
   }

@@ -1,35 +1,29 @@
 <template lang="pug">
     div
-      CpBrandDeleteConfirm(:showDialogConfirm="showConfirmModalMutated",:closeDialogConfirm="closeDialogConfirm" ,:messageConfirm="messageConfirm")
+      //CpBrandDeleteConfirm(:showDialogConfirm="showConfirmModalMutated", :messageConfirm="messageConfirm")
+      CpModalConfirmBase(:showDialogConfirm="showConfirmModalMutated", :closeDialogConfirm="closeDialogConfirm")
       md-button#button_plus.md-icon-button.md-raised.button_add_item(@click='addBrandModal')
         md-icon add 
-      CpBrandModal(:showDialog='showDialog',:closeDialog='switchShowBrandModal',:brand='brand',:getListBrands='setList')
-      CpModuloBase(titleModule='Marcas',labelModule='Crear tu primera marca',descriptionModule='Registra aquí las marca del grupo EL COMERCIO', buttonModule='Crear tu primera marca',:arListItems="arListBrands", :openModal='switchShowBrandModal')
+      CpEpisodeModal(:showDialog='showDialog',:closeDialog='switchShowBrandModal',:brand='brand',:getListBrands='setList')
+      CpModuloBase(titleModule='Episodios',labelModule='Crear tu primera episodio',descriptionModule='Registra aquí los episodios de los podcasts', buttonModule='Crear tu primera episodio',:arListItems="arListBrands", :openModal='switchShowBrandModal')
         div.md-layout
           template(v-for="item in arListBrands")
-            CpBrand(:item="item" :title="item.name",:image="item.icon",:date="item.date_register", icon='branding_watermark' :setBrandEdit="setBrandEdit" :setBrandDelete="setBrandDelete")
+            CpEpisode(:item="item" :title="item.name",:image="item.icon",:date="item.date_register", icon='music_note' :setBrandEdit="setBrandEdit" :setBrandDelete="setBrandDelete")
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
 import CpModuloBase from "@/components/base/modulo/CpModuloBase";
-import CpBrandModal from "@/components/brands/CpBrandModal";
-import CpBrand from "@/components/brands/CpBrand";
-import CpBrandDeleteConfirm from "@/components/brands/CpBrandDeleteConfirm";
+import CpEpisodeModal from "@/components/episodes/CpEpisodeModal";
+import CpEpisode from "@/components/episodes/CpEpisode";
+//import CpBrandDeleteConfirm from "@/components/episodes/CpBrandDeleteConfirm";
+import CpModalConfirmBase from "@/components/base/modulo/CpModalConfirmBase";
 export default {
-  components: { CpModuloBase, CpBrandModal, CpBrand, CpBrandDeleteConfirm },
+  components: { CpModuloBase, CpEpisodeModal, CpEpisode, CpModalConfirmBase },
   computed: {
     ...mapGetters({
       showDialog: "brand/showBrandModal",
       showConfirmModal: "brand/showConfirmModal"
     })
-    /*showConfirmModal: {
-      // getter
-      get: function() {
-        return this.$store.state.brand.showConfirmModal;
-      },
-      // setter
-      set: function(newValue) {}
-    }*/
   },
   data: function() {
     let brand = this.setDefaultBrand();

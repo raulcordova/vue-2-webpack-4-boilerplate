@@ -9,7 +9,6 @@
                     span.md-title 
                         md-icon.icono-blanco {{icon}}
                         span {{title | truncate(20, '...')}}
-                        md-tooltip(md-direction="top") {{ title }} 
                     span.md-subhead Creado: {{date}}
                 md-card-actions
                     md-menu(md-size='small' md-direction='top-end')

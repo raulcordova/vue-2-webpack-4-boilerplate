@@ -1,23 +1,15 @@
 <template lang="pug">
-    CpModalConfirm(:showDialogConfirm='showVentana',title='Alerta',:content='messageConfirm', :onConfirm='confirm')
+    CpModalConfirmBase(:showDialogConfirm='showDialogConfirm',title='Alerta',:content='messageConfirm' :closeDialogConfirm="closeDialogConfirm")
 </template>
 <script>
-import CpModalConfirm from "@/components/base/modulo/CpModalConfirm";
+import CpModalConfirmBase from "@/components/base/modulo/CpModalConfirmBase";
 export default {
-  computed: {
-    showVentana: function() {
-      return this.showDialogConfirm;
-    }
-  },
   props: {
     showDialogConfirm: {},
+    closeDialogConfirm: {},
     messageConfirm: {}
   },
-  components: { CpModalConfirm },
-  methods: {
-    confirm() {
-      alert("confirm");
-    }
-  }
+  components: { CpModalConfirmBase },
+  methods: {}
 };
 </script>
