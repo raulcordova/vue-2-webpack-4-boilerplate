@@ -21,7 +21,7 @@ export default {
         })
         .catch(() => {
           this.$store.commit("user/changeLoader");
-          console.log("Error eliminar brand");
+          console.log("Error eliminar item");
         });
     },
     getListBrands() {

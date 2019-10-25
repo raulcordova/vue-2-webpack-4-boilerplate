@@ -11,17 +11,16 @@ export default {
   getList({
     commit,
     dispatch,
-  }) {
+  }, cod_podcast) {
     return new Promise((resolve, reject) => {
       axios
-        .get("/brand/list")
+        .get("/episode/list?cod_brand=COD&cod_podcast=" + cod_podcast)
         .then(res => {
           if (res.data.data) {
             resolve(res);
           } else {
             reject(res);
           }
-          //}
         })
         .catch(err => {
           reject(err);
@@ -35,7 +34,7 @@ export default {
   }, brand) {
     return new Promise((resolve, reject) => {
       axios
-        .post("/brand/register", brand)
+        .post("/episode/register", episode)
         .then(res => {
           console.log(res.data);
           if (res.data.data) {
@@ -54,10 +53,10 @@ export default {
     commit,
     dispatch
 
-  }, brand) {
+  }, episode) {
     return new Promise((resolve, reject) => {
       axios
-        .put("/brand/update?cod_brand=" + brand.cod_brand, brand)
+        .put("/episode/update?cod_episode=" + brand.cod_episode, episode)
         .then(res => {
           console.log(res.data);
           if (res.data.data) {
@@ -76,10 +75,10 @@ export default {
     commit,
     dispatch
 
-  }, cod_brand) {
+  }, cod_episode) {
     return new Promise((resolve, reject) => {
       axios
-        .delete("/brand/delete?cod_brand=" + cod_brand)
+        .delete("/brand/delete?cod_episode=" + cod_episode)
         .then(res => {
           console.log(res.data);
           if (res.data.data) {

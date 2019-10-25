@@ -15,7 +15,7 @@ export default {
     display flex
     justify-content center
     align-items center
-    background-color #ea0c90
+    background-color #222f3e
     flex-direction column
     left 0
     bottom 0

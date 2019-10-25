@@ -1,13 +1,14 @@
 <template lang="pug">
-    div
-      CpBrandDeleteConfirm(:showDialogConfirm="showConfirmModalMutated", :messageConfirm="messageConfirm")
+    div#moduloPrincipal
+      h1 Marcas
       md-button#button_plus.md-icon-button.md-raised.button_add_item(@click='addBrandModal')
         md-icon add 
-      CpBrandModal(:showDialog='showDialog',:closeDialog='switchShowBrandModal',:brand='brand',:getListBrands='setList')
-      CpModuloBase(titleModule='Marcas',labelModule='Crear tu primera marca',descriptionModule='Registra aquí las marca del grupo EL COMERCIO', buttonModule='Crear tu primera marca',:arListItems="arListBrands", :openModal='switchShowBrandModal')
-        div.md-layout
-          template(v-for="item in arListBrands")
-            CpBrand(:item="item" :title="item.name",:image="item.icon",:date="item.date_register", icon='branding_watermark' :setBrandEdit="setBrandEdit" :setBrandDelete="setBrandDelete")
+      CpBrandDeleteConfirm(:showDialogConfirm.sync="showConfirmModal" :messageConfirm.sync="messageConfirm" :codBrandDelete.sync="codBrandDelete")
+      CpBrandModal(:showDialog.sync='showDialog',:brand='brand')
+      CpModuloBase(v-if="arListBrandsLength", labelModule='Crear tu primera marca',descriptionModule='Registra aquí las marca del grupo EL COMERCIO', buttonModule='Crear tu primera marca', :openModal='addBrandModal')
+      div.md-layout
+        template(v-for="item in arListBrands")
+          CpBrand(:item="item", icon='branding_watermark' )
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
@@ -17,28 +18,21 @@ import CpBrand from "@/components/brands/CpBrand";
 import CpBrandDeleteConfirm from "@/components/brands/CpBrandDeleteConfirm";
 export default {
   components: { CpModuloBase, CpBrandModal, CpBrand, CpBrandDeleteConfirm },
-  computed: {
-    ...mapGetters({
-      showDialog: "brand/showBrandModal",
-      showConfirmModal: "brand/showConfirmModal"
-    })
-    /*showConfirmModal: {
-      // getter
-      get: function() {
-        return this.$store.state.brand.showConfirmModal;
-      },
-      // setter
-      set: function(newValue) {}
-    }*/
-  },
   data: function() {
     let brand = this.setDefaultBrand();
     return {
       arListBrands: [],
       brand: brand,
       messageConfirm: "",
-      showConfirmModalMutated: false
+      codBrandDelete: "",
+      showDialog: false,
+      showConfirmModal: false
     };
+  },
+  computed: {
+    arListBrandsLength: function() {
+      return this.arListBrands.length > 0 ? false : true;
+    }
   },
   created: function() {
     this.setList();
@@ -52,12 +46,10 @@ export default {
           this.arListBrands = res.data.data;
           this.$store.commit("user/changeLoader");
         })
-        .catch(() => {
-          this.arListBrands = res.data.data;
-        });
+        .catch(() => {});
     },
     switchShowBrandModal() {
-      this.$store.commit("brand/changeShowBrandModal");
+      this.showDialog = !this.showDialog;
     },
     addBrandModal() {
       this.brand = this.setDefaultBrand();
@@ -65,6 +57,7 @@ export default {
     },
     setBrandEdit(brand) {
       this.brand = brand;
+      this.switchShowBrandModal();
     },
     setDefaultBrand() {
       return {
@@ -76,9 +69,13 @@ export default {
       };
     },
     setBrandDelete(item) {
-      this.showConfirmModalMutated = true;
+      this.showConfirmModal = true;
       this.messageConfirm =
         "esta seguro de eliminar la marca: <strong>" + item.name + "?</strong>";
+      this.codBrandDelete = item.cod_brand;
+    },
+    closeDialogConfirm() {
+      this.showConfirmModal = false;
     }
   }
 };
