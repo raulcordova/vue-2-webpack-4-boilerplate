@@ -5,8 +5,8 @@
     span.md-title
         img#logo(src="@/img/logo.svg")
     md-tabs.md-xsmall-hide.md-primary
-        md-tab#tab-home(md-label='Podcast')
-        md-tab#tab-pages(md-label='Marcas', to='brands')
+        md-tab#tab-home(md-label='Podcasts',:to="{ name: 'Podcasts'}")
+        md-tab#tab-pages(md-label='Marcas', :to="{ name: 'Brands'}")
 </template>
 <script>
 export default {

@@ -3,7 +3,7 @@
     md-card
         md-card-media-cover(md-solid='')
             md-card-media(md-ratio='1:1')
-                img(:src='item.icon')
+                img(:src='item.icon' @click="actionRedirect")
             md-card-area
                 md-card-header
                     span.md-title 
@@ -39,6 +39,13 @@ export default {
     icon: {},
     editAction: {},
     deleteAction: {}
+  },
+  methods: {
+    actionRedirect() {
+      if (this.$parent.actionRedirect) {
+        this.$parent.actionRedirect();
+      }
+    }
   }
 };
 </script>
