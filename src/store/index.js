@@ -5,6 +5,7 @@ import createPersistedState from "vuex-persistedstate";
 // Modules
 import user from "./modules/user";
 import brand from "./modules/brand";
+import episode from "./modules/episode";
 
 Vue.use(Vuex);
 
@@ -14,7 +15,8 @@ export default new Vuex.Store({
    */
   modules: {
     user,
-    brand
+    brand,
+    episode
   },
   plugins: [
     createPersistedState({

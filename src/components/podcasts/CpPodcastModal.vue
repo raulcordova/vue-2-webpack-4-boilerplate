@@ -1,21 +1,19 @@
 <template lang="pug">
-   CpModalBase(modalTitle='Marca',:showDialog.sync='showDialog',:closeDialog='onCloseModal', :actionDialog='actionDialog' :getListBrands='getListBrands')
+   CpModalBase(modalTitle='Podcast',:showDialog.sync='showDialog',:closeDialog='onCloseModal', :actionDialog='actionDialog' :getList='getList')
     .form
-      md-field(:class="getValidationClass('code')")
-        label Código
-        md-input(v-model='brand.code' autofocus='')
-        span.md-error(v-if='!$v.brand.code.required') requerido
-        span.md-error(v-else-if='!$v.brand.code.minLength') mínimo 3 caracteres
       md-field(:class="getValidationClass('name')")
-        label Nombre
-        md-input(v-model='brand.name')
-        span.md-error(v-if='!$v.brand.name.required') requerido
-        span.md-error(v-else-if='!$v.brand.name.minLength') mínimo 3 caracteres        
+        label Título
+        md-input(v-model='item.name')
+        span.md-error(v-if='!$v.item.name.required') requerido
+        span.md-error(v-else-if='!$v.item.name.minLength') mínimo 3 caracteres
+      md-field
+        label Descripción
+        md-textarea(v-model='item.description')        
       md-field(:class="getValidationClass('icon')")
-        label Url del logo
-        md-input(v-model='brand.icon')                  
-        span.md-error(v-if='!$v.brand.icon.required') requerido
-        span.md-error(v-else-if='!$v.brand.icon.url') url no válida        
+        label Imagen
+        md-file(v-model='item.icon' placeholder='Cargar la imagen del podcast' accept="image/*")                  
+        span.md-error(v-if='!$v.item.icon.required') requerido
+      md-chips(v-model='item.tags' md-placeholder='Agregar Tags...')                            
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
@@ -25,41 +23,46 @@ import CpModalBase from "@/components/base/modulo/CpModalBase";
 export default {
   components: { CpModalBase },
   mixins: [validationMixin],
+  data: function() {
+    return {
+      arListAuthor: ["Luis Chikana", "Renzo Carpio", "Juan Carlos"]
+    };
+  },
   props: {
     showDialog: {},
     closeDialog: {},
-    brand: {
+    item: {
       default: function() {
         return {
           cod_brand: "",
           name: "",
+          description: "",
           icon: "",
           code: "",
-          date_register: ""
+          date_register: "",
+          tags: ["salsa", "rock", "balada"]
         };
       }
     }
   },
   validations: {
-    brand: {
-      code: {
-        required,
-        minLength: minLength(3)
-      },
+    item: {
       name: {
         required,
         minLength: minLength(3)
       },
       icon: {
-        required,
-        url
+        required
+      },
+      date_publish: {
+        required
       }
     }
   },
   methods: {
     ...mapActions("brand", ["add", "edit"]),
     getValidationClass(fieldName) {
-      const field = this.$v.brand[fieldName];
+      const field = this.$v.item[fieldName];
       if (field) {
         return {
           "md-invalid": field.$invalid && field.$dirty
@@ -74,25 +77,25 @@ export default {
         if (this.brand.cod_brand == "") {
           this.add(this.brand)
             .then(res => {
-              this.getListBrands();
+              this.getList();
             })
             .catch(() => {
               this.$store.commit("user/changeLoader");
-              console.log("Error agregar brand");
+              console.log("Error agregar item");
             });
         } else {
           this.edit(this.brand)
             .then(res => {
-              this.getListBrands();
+              this.getList();
             })
             .catch(() => {
               this.$store.commit("user/changeLoader");
-              console.log("Error editar brand");
+              console.log("Error editar item");
             });
         }
       }
     },
-    getListBrands() {
+    getList() {
       this.$store.commit("user/changeLoader");
       this.onCloseModal();
       this.$parent.setList();
@@ -104,3 +107,7 @@ export default {
   }
 };
 </script>
+<style lang="stylus">
+.md-menu-content
+    z-index 11 !important
+</style>

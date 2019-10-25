@@ -19,13 +19,11 @@ export default {
   },
   methods: {
     showModalEdit() {
-      //this.$store.commit("brand/setBrand", this.item);
       let itemEdit = Object.assign({}, this.item);
-      this.$parent.setBrandEdit(itemEdit);
-      //this.$store.commit("brand/changeShowBrandModal");
+      this.$parent.setItemEdit(itemEdit);
     },
     showDeleteConfirm() {
-      this.$parent.setBrandDelete(this.item);
+      this.$parent.setItemDelete(this.item);
     }
   }
 };

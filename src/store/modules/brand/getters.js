@@ -9,5 +9,11 @@
 export default {
   showBrandModal: state => {
     return state.showBrandModal;
+  },
+  showConfirmModal: state => {
+    return state.showConfirmModal;
+  },
+  getBrand: state => {
+    return state.brand;
   }
 };
