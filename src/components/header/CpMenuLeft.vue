@@ -6,7 +6,7 @@
         img#logo(src="@/img/logo.svg")
     md-tabs.md-xsmall-hide.md-primary
         md-tab#tab-home(md-label='Podcast')
-        md-tab#tab-pages(md-label='Marcas', to='/dashboard/brands')
+        md-tab#tab-pages(md-label='Marcas', to='brands')
 </template>
 <script>
 export default {

@@ -1,5 +1,5 @@
 <template lang="pug">
-   CpModalBase(modalTitle='Marca',:showDialog='showDialog',:closeDialog='closeDialogBrand', :actionDialog='actionDialog' :getListBrands='getListBrands')
+   CpModalBase(modalTitle='Marca',:showDialog.sync='showDialog',:closeDialog='onCloseModal', :actionDialog='actionDialog' :getListBrands='getListBrands')
     .form
       md-field(:class="getValidationClass('code')")
         label Código
@@ -28,7 +28,6 @@ export default {
   props: {
     showDialog: {},
     closeDialog: {},
-    getListBrands: {},
     brand: {
       default: function() {
         return {
@@ -75,8 +74,6 @@ export default {
         if (this.brand.cod_brand == "") {
           this.add(this.brand)
             .then(res => {
-              this.$store.commit("user/changeLoader");
-              this.closeDialog();
               this.getListBrands();
             })
             .catch(() => {
@@ -86,20 +83,23 @@ export default {
         } else {
           this.edit(this.brand)
             .then(res => {
-              this.$store.commit("user/changeLoader");
-              this.closeDialog();
               this.getListBrands();
             })
             .catch(() => {
               this.$store.commit("user/changeLoader");
-              console.log("Error agregar brand");
+              console.log("Error editar brand");
             });
         }
       }
     },
-    closeDialogBrand() {
+    getListBrands() {
+      this.$store.commit("user/changeLoader");
+      this.onCloseModal();
+      this.$parent.setList();
+    },
+    onCloseModal() {
       this.$v.$reset();
-      this.closeDialog();
+      this.$parent.switchShowBrandModal();
     }
   }
 };

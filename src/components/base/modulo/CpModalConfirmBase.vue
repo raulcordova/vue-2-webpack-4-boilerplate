@@ -7,6 +7,7 @@ export default {
   props: {
     showDialogConfirm: {},
     closeDialogConfirm: {},
+    onConfirm: {},
     title: {
       default: "Sin Titulo"
     },
@@ -29,9 +30,6 @@ export default {
     }
   },
   methods: {
-    onConfirm() {
-      this.closeDialogConfirm();
-    },
     onCancel() {
       this.closeDialogConfirm();
     }

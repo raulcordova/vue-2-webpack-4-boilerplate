@@ -71,5 +71,27 @@ export default {
           reject(err);
         });
     });
+  },
+  delete({
+    commit,
+    dispatch
+
+  }, cod_brand) {
+    return new Promise((resolve, reject) => {
+      axios
+        .delete("/brand/delete?cod_brand=" + cod_brand)
+        .then(res => {
+          console.log(res.data);
+          if (res.data.data) {
+            resolve(res);
+          } else {
+            reject(res);
+          }
+          //}
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
   }
 };
