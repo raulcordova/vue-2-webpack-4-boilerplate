@@ -1,22 +1,36 @@
 <template lang="pug">
-    CpModalConfirmBase(:showDialogConfirm='showVentana',title='Alerta',:content='messageConfirm', :onConfirm='confirm')
+    CpModalConfirmBase(:showDialogConfirm='showDialogConfirm',title='Alerta',:content='messageConfirm' :closeDialogConfirm="closeDialogConfirm" :onConfirm='deleteBrand')
 </template>
 <script>
+import { mapActions } from "vuex";
 import CpModalConfirmBase from "@/components/base/modulo/CpModalConfirmBase";
 export default {
-  computed: {
-    showVentana: function() {
-      return this.showDialogConfirm;
-    }
-  },
   props: {
     showDialogConfirm: {},
-    messageConfirm: {}
+    messageConfirm: {},
+    codBrandDelete: {}
   },
   components: { CpModalConfirmBase },
   methods: {
-    confirm() {
-      alert("confirm");
+    ...mapActions("brand", ["delete"]),
+    deleteBrand() {
+      this.$store.commit("user/changeLoader");
+      this.delete(this.codBrandDelete)
+        .then(res => {
+          this.getListBrands();
+        })
+        .catch(() => {
+          this.$store.commit("user/changeLoader");
+          console.log("Error eliminar item");
+        });
+    },
+    getListBrands() {
+      this.$store.commit("user/changeLoader");
+      this.$parent.setList();
+      this.closeDialogConfirm();
+    },
+    closeDialogConfirm() {
+      this.$parent.closeDialogConfirm();
     }
   }
 };

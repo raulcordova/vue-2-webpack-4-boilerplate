@@ -1,9 +1,9 @@
 <template lang="pug">
-    CpBrandsModule
+    CpBrandModule
 </template>
 <script>
-import CpBrandsModule from "@/components/brands/CpBrandsModule";
+import CpBrandModule from "@/components/brands/CpBrandModule";
 export default {
-  components: { CpBrandsModule }
+  components: { CpBrandModule }
 };
 </script>

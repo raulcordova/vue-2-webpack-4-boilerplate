@@ -46,9 +46,7 @@ export default {
           this.arListBrands = res.data.data;
           this.$store.commit("user/changeLoader");
         })
-        .catch(() => {
-          this.arListBrands = res.data.data;
-        });
+        .catch(() => {});
     },
     switchShowBrandModal() {
       this.showDialog = !this.showDialog;

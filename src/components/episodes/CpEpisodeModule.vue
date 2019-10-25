@@ -1,81 +1,94 @@
 <template lang="pug">
-    div
-      //CpBrandDeleteConfirm(:showDialogConfirm="showConfirmModalMutated", :messageConfirm="messageConfirm")
-      CpModalConfirmBase(:showDialogConfirm="showConfirmModalMutated", :closeDialogConfirm="closeDialogConfirm")
-      md-button#button_plus.md-icon-button.md-raised.button_add_item(@click='addBrandModal')
+    div#moduloPrincipal
+      h1 Episodios
+      md-button#button_plus.md-icon-button.md-raised.button_add_item(@click='addModal')
         md-icon add 
-      CpEpisodeModal(:showDialog='showDialog',:closeDialog='switchShowBrandModal',:brand='brand',:getListBrands='setList')
-      CpModuloBase(titleModule='Episodios',labelModule='Crear tu primera episodio',descriptionModule='Registra aquí los episodios de los podcasts', buttonModule='Crear tu primera episodio',:arListItems="arListBrands", :openModal='switchShowBrandModal')
-        div.md-layout
-          template(v-for="item in arListBrands")
-            CpEpisode(:item="item" :title="item.name",:image="item.icon",:date="item.date_register", icon='music_note' :setBrandEdit="setBrandEdit" :setBrandDelete="setBrandDelete")
+      CpEpisodeDeleteConfirm(:showDialogConfirm.sync="showConfirmModal" :messageConfirm.sync="messageConfirm" :codBrandDelete.sync="codBrandDelete")
+      CpEpisodeModal(:showDialog.sync='showDialog',:item='item')
+      CpModuloBase(v-if="arListItemsLength", labelModule='Crear tu episodio',descriptionModule='Registra aquí los episodios de los podcast', buttonModule='Crear tu primer episodio', :openModal='addModal')
+      div.md-layout
+        template(v-for="item in arListItems")
+          CpEpisode(:item="item", icon='music_note' )
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import CpModuloBase from "@/components/base/modulo/CpModuloBase";
 import CpEpisodeModal from "@/components/episodes/CpEpisodeModal";
 import CpEpisode from "@/components/episodes/CpEpisode";
-//import CpBrandDeleteConfirm from "@/components/episodes/CpBrandDeleteConfirm";
-import CpModalConfirmBase from "@/components/base/modulo/CpModalConfirmBase";
+import CpEpisodeDeleteConfirm from "@/components/episodes/CpEpisodeDeleteConfirm";
 export default {
-  components: { CpModuloBase, CpEpisodeModal, CpEpisode, CpModalConfirmBase },
-  computed: {
-    ...mapGetters({
-      showDialog: "brand/showBrandModal",
-      showConfirmModal: "brand/showConfirmModal"
-    })
+  components: {
+    CpModuloBase,
+    CpEpisodeModal,
+    CpEpisode,
+    CpEpisodeDeleteConfirm
   },
   data: function() {
-    let brand = this.setDefaultBrand();
+    let item = this.setDefaultItem();
     return {
-      arListBrands: [],
-      brand: brand,
+      arListItems: [],
+      item: item,
       messageConfirm: "",
-      showConfirmModalMutated: false
+      codBrandDelete: "",
+      showDialog: false,
+      showConfirmModal: false
     };
+  },
+  computed: {
+    arListItemsLength: function() {
+      return this.arListItems.length > 0 ? false : true;
+    }
   },
   created: function() {
     this.setList();
   },
   methods: {
-    ...mapActions("brand", ["getList"]),
+    ...mapActions("episode", ["getList"]),
     async setList() {
+      return false;
       this.$store.commit("user/changeLoader");
-      this.getList()
+      this.getList("2e8ab6ba-f5d6-11e9-a8f2-80ce62387992")
         .then(res => {
-          this.arListBrands = res.data.data;
+          this.arListItems = res.data.data;
           this.$store.commit("user/changeLoader");
         })
-        .catch(() => {
-          this.arListBrands = res.data.data;
-        });
+        .catch(() => {});
     },
     switchShowBrandModal() {
-      this.$store.commit("brand/changeShowBrandModal");
+      this.showDialog = !this.showDialog;
     },
-    addBrandModal() {
-      this.brand = this.setDefaultBrand();
+    addModal() {
+      this.brand = this.setDefaultItem();
       this.switchShowBrandModal();
     },
-    setBrandEdit(brand) {
-      this.brand = brand;
+    setItemEdit(item) {
+      this.item = item;
+      this.switchShowBrandModal();
     },
-    setDefaultBrand() {
+    setDefaultItem() {
       return {
         cod_brand: "",
         name: "",
+        description: "",
         icon: "",
+        audio: "",
         code: "",
-        date_register: ""
+        date_register: "",
+        date_publish: "2019-10-29",
+        author: "",
+        tags: ["salsa", "rock", "balada"]
       };
     },
-    setBrandDelete(item) {
-      this.showConfirmModalMutated = true;
+    setItemDelete(item) {
+      this.showConfirmModal = true;
       this.messageConfirm =
-        "esta seguro de eliminar la marca: <strong>" + item.name + "?</strong>";
+        "¿esta seguro de eliminar el episodio: <strong>" +
+        item.name +
+        "?</strong>";
+      this.codBrandDelete = item.cod_brand;
     },
     closeDialogConfirm() {
-      this.showConfirmModalMutated = false;
+      this.showConfirmModal = false;
     }
   }
 };
