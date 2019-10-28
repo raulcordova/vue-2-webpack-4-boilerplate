@@ -10,11 +10,8 @@ export default {
     this.redirectDashboard();
   },
   methods: {
-    redirectDashboard() {
-      let self = this;
-      setTimeout(function() {
-        self.$router.push("/dashboard");
-      }, 3000);
+    redirectDashboard(evt) {
+      this.$store.commit("user/setJWT", "anyway");
     }
   }
 };
