@@ -35,7 +35,7 @@ const routes = [{
       component: VwPodcasts
     },
     {
-      path: "podcast/episodes",
+      path: "podcasts/episodes/:id",
       name: "Episodes",
       component: VwEpisodes
     }

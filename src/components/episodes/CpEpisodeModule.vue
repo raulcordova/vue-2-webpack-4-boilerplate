@@ -1,6 +1,6 @@
 <template lang="pug">
     div#moduloPrincipal
-      h1 Episodios
+      h1 Episodios - {{ titlePodcast}}
       md-button#button_plus.md-icon-button.md-raised.button_add_item(@click='addModal')
         md-icon add 
       CpEpisodeDeleteConfirm(:showDialogConfirm.sync="showConfirmModal" :messageConfirm.sync="messageConfirm" :codBrandDelete.sync="codBrandDelete")
@@ -31,7 +31,8 @@ export default {
       messageConfirm: "",
       codBrandDelete: "",
       showDialog: false,
-      showConfirmModal: false
+      showConfirmModal: false,
+      titlePodcast: ""
     };
   },
   computed: {
@@ -40,6 +41,7 @@ export default {
     }
   },
   created: function() {
+    this.titlePodcast = this.$route.params.id;
     this.setList();
   },
   methods: {
