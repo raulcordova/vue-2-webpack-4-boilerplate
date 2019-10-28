@@ -33,8 +33,11 @@ export default {
 };
 </script>
 <style lang="stylus">
+maxWidthSmartPhone = 720px
 .md-dialog
-  width 40vw !important
+  width 40vw
+  @media screen and (max-width: maxWidthSmartPhone )
+    width  100vw  
 .md-dialog-title
   background-color #2e86de
   color white
