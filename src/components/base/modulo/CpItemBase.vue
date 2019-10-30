@@ -3,12 +3,12 @@
     md-card
         md-card-media-cover(md-solid='')
             md-card-media(md-ratio='1:1')
-                img(:src='item.icon' @click="actionRedirect")
+                img(:src='item.icon ? item.icon : item.image' @click="actionRedirect")
             md-card-area
                 md-card-header
                     span.md-title 
                         md-icon.icono-blanco {{icon}}
-                        span {{item.name | truncate(20, '...')}}
+                        span {{name | truncate(20, '...')}}
                     span.md-subhead Creado: {{item.date_register}}
                 md-card-actions
                     md-menu(md-size='small' md-direction='top-end')
@@ -35,6 +35,9 @@ export default {
           date: ""
         };
       }
+    },
+    name: {
+      default: ""
     },
     icon: {},
     editAction: {},

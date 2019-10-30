@@ -8,7 +8,7 @@
       CpModuloBase(v-if="arListBrandsLength", labelModule='Crear tu primera marca',descriptionModule='Registra aquí las marca del grupo EL COMERCIO', buttonModule='Crear tu primera marca', :openModal='addBrandModal')
       div.md-layout
         template(v-for="item in arListBrands")
-          CpBrand(:item="item", icon='branding_watermark' )
+          CpBrand(:item="item",:name="item.name" icon='branding_watermark' )
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";

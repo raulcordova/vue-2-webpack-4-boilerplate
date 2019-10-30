@@ -1,5 +1,5 @@
 <template lang="pug">
-    CpItemBase( :icon='icon', :item='item', :editAction='showModalEdit' :deleteAction='showDeleteConfirm')
+    CpItemBase( :icon='icon', :item='item', :editAction='showModalEdit' :deleteAction='showDeleteConfirm', :name='name')
 </template>
 <script>
 import CpItemBase from "@/components/base/modulo/CpItemBase";
@@ -12,6 +12,7 @@ export default {
   },
   props: {
     item: {},
+    name: {},
     icon: {},
     editAction: {},
     setBrandEdit: {},
@@ -26,10 +27,8 @@ export default {
       this.$parent.setItemDelete(this.item);
     },
     actionRedirect() {
-      const cod_podcast = Math.random()
-        .toString(36)
-        .replace(/[^a-z]+/g, "");
-      const url = "/podcasts/episodes/" + cod_podcast;
+      const cod_podcast = this.item.cod_podcast;
+      const url = "/podcasts/episodes/" + cod_podcast + "/" + this.item.name;
       console.log(url);
       this.$router.push(url);
     }

@@ -1,5 +1,5 @@
 <template lang="pug">
-    CpItemBase(:icon='icon', :item='item', :editAction='showModalEdit' :deleteAction='showDeleteConfirm')
+    CpItemBase(:icon='icon', :item='item',:name='name', :editAction='showModalEdit' :deleteAction='showDeleteConfirm')
 </template>
 <script>
 import CpItemBase from "@/components/base/modulo/CpItemBase";
@@ -12,6 +12,7 @@ export default {
   },
   props: {
     item: {},
+    name: {},
     icon: {},
     editAction: {},
     setBrandEdit: {},

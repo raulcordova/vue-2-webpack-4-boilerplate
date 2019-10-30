@@ -11,10 +11,11 @@ import VueAxios from "vue-axios";
 import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
-
+import UUID from 'vue-uuid';
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(VueMaterial);
+Vue.use(UUID);
 
 
 const filter = function (text, length, clamp) {
@@ -51,6 +52,8 @@ Vue.config.productionTip = false;
 axios.defaults.baseURL = process.env.API_URL;
 axios.defaults.headers.get["Accept"] = "application/json";
 axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common['Access-Control-Allow-Methods'] = '*';
 
 new Vue({
   el: "#app",

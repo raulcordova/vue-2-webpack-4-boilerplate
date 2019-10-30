@@ -41,7 +41,7 @@ export default {
     }
   },
   created: function() {
-    this.titlePodcast = this.$route.params.id;
+    this.titlePodcast = this.$route.params.name;
     this.setList();
   },
   methods: {

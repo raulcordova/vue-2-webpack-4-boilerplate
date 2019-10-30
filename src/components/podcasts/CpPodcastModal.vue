@@ -8,18 +8,27 @@
         span.md-error(v-else-if='!$v.item.name.minLength') mínimo 3 caracteres
       md-field
         label Descripción
-        md-textarea(v-model='item.description')        
-      md-field(:class="getValidationClass('icon')")
+        md-textarea(v-model='item.description')
+      md-field(:class="getValidationClass('cod_brand')")
+        label Marca
+        md-select(v-model='item.cod_brand')
+          template(v-for="item in arListBrands")
+            md-option(:value="item.cod_brand") {{item.name}}
+        span.md-error(v-if='!$v.item.cod_brand.required') requerido
+        span.md-error(v-else-if='!$v.item.cod_brand.minLength') mínimo 3 caracteres                            
+      md-field(:class="getValidationClass('image')")
         label Imagen
-        md-file(v-model='item.icon' placeholder='Cargar la imagen del podcast' accept="image/*")                  
-        span.md-error(v-if='!$v.item.icon.required') requerido
-      md-chips(v-model='item.tags' md-placeholder='Agregar Tags...')                            
+        md-file(v-model='item.imagen' placeholder='Cargar la imagen del podcast' accept="image/*",@change="changeFile")                  
+        span.md-error(v-if='!$v.item.imagen.required') requerido
+      md-chips(v-model='item.tags' md-placeholder='Tags...')                            
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required, url, minLength } from "vuelidate/lib/validators";
 import CpModalBase from "@/components/base/modulo/CpModalBase";
+import uploadS3 from "@/s3";
+
 export default {
   components: { CpModalBase },
   mixins: [validationMixin],
@@ -34,15 +43,20 @@ export default {
     item: {
       default: function() {
         return {
-          cod_brand: "",
+          cod_podcast: "",
           name: "",
           description: "",
-          icon: "",
-          code: "",
-          date_register: "",
-          tags: ["salsa", "rock", "balada"]
+          image: "",
+          imagen: "",
+          fileImage: null,
+          cod_brand: "",
+          urlImage: "",
+          tags: []
         };
       }
+    },
+    arListBrands: {
+      default: []
     }
   },
   validations: {
@@ -51,16 +65,16 @@ export default {
         required,
         minLength: minLength(3)
       },
-      icon: {
+      imagen: {
         required
       },
-      date_publish: {
+      cod_brand: {
         required
       }
     }
   },
   methods: {
-    ...mapActions("brand", ["add", "edit"]),
+    ...mapActions("podcast", ["add", "edit"]),
     getValidationClass(fieldName) {
       const field = this.$v.item[fieldName];
       if (field) {
@@ -69,34 +83,50 @@ export default {
         };
       }
     },
+    changeFile(e) {
+      let uuid = this.$uuid.v4();
+      const podcastImageFolder = "podcast/" + uuid + "/img";
+
+      this.fileImage = e.target.files[0];
+
+      this.item.image =
+        "http://d16yve6aazp0mo.cloudfront.net/" +
+        podcastImageFolder +
+        "/" +
+        this.fileImage.name;
+      this.urlImage = podcastImageFolder;
+    },
+    actionAPI() {
+      this.$store.commit("user/changeLoader");
+
+      if (this.item.cod_podcast == "") {
+        this.add(this.item)
+          .then(res => {
+            this.getList();
+          })
+          .catch(() => {
+            this.$store.commit("user/changeLoader");
+            console.log("Error agregar item");
+          });
+      } else {
+        this.edit(this.item)
+          .then(res => {
+            this.$store.commit("user/changeLoader");
+            this.getList();
+          })
+          .catch(() => {
+            this.$store.commit("user/changeLoader");
+            console.log("Error editar item");
+          });
+      }
+    },
     actionDialog() {
       this.$v.$touch();
-
       if (!this.$v.$invalid) {
-        this.$store.commit("user/changeLoader");
-        if (this.brand.cod_brand == "") {
-          this.add(this.brand)
-            .then(res => {
-              this.getList();
-            })
-            .catch(() => {
-              this.$store.commit("user/changeLoader");
-              console.log("Error agregar item");
-            });
-        } else {
-          this.edit(this.brand)
-            .then(res => {
-              this.getList();
-            })
-            .catch(() => {
-              this.$store.commit("user/changeLoader");
-              console.log("Error editar item");
-            });
-        }
+        uploadS3(this.fileImage, this.urlImage, this.actionAPI);
       }
     },
     getList() {
-      this.$store.commit("user/changeLoader");
       this.onCloseModal();
       this.$parent.setList();
     },
