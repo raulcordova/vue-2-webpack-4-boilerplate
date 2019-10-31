@@ -7,7 +7,8 @@
     md-app-toolbar.md-large.md-dense.md-primary
       CpHeader
     md-app-drawer(:md-active.sync='menuVisible')
-      md-toolbar.md-transparent(md-elevation='0') Menú
+      md-toolbar.md-transparent(md-elevation='0')
+      img#logoHmenu(src="@/img/logo.svg")
       CpHamburgerMenu   
     md-app-content
         router-view
@@ -43,8 +44,19 @@ export default {
 };
 </script>
 <style lang="styl">
+maxWidthSmartPhone = 720px
 #logo
     width 200px
+#logoHmenu
+    width 200px
+    left 25px
+    top 30px
+    position absolute
+    z-index 2
 .saludo_usuario
-    margin 5px  
+    margin 5px
+.md-small-show
+  display none
+  @media screen and (max-width: maxWidthSmartPhone )
+    display  block      
 </style>

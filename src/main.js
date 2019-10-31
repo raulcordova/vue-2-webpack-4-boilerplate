@@ -9,12 +9,16 @@ import routes from "./routes";
 import store from './store';
 import VueAxios from "vue-axios";
 import VueMaterial from 'vue-material';
+import vueMoment from "vue-moment";
+import UUID from 'vue-uuid';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
-
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(VueMaterial);
+Vue.use(vueMoment);
+Vue.use(UUID);
+
 
 
 const filter = function (text, length, clamp) {
@@ -31,14 +35,28 @@ Vue.filter('truncate', filter);
 const router = new VueRouter({
   routes,
   linkActiveClass: "active",
-  mode: "history"
+  mode: "history",
+
 });
+let isAuthenticated = JSON.parse(localStorage.user);
+const getJWT = isAuthenticated.user.jwt;
+router.beforeEach((to, from, next) => {
+  if (to.name == 'Welcome' && getJWT) {
+    next('/podcasts');
+  }
+
+  if (to.name != 'Welcome' && !getJWT) next('/login')
+  else next();
+})
+
 
 Vue.config.productionTip = false;
 
 axios.defaults.baseURL = process.env.API_URL;
 axios.defaults.headers.get["Accept"] = "application/json";
 axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common['Access-Control-Allow-Methods'] = '*';
 
 new Vue({
   el: "#app",

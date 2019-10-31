@@ -10,7 +10,7 @@ export default {
   setJWT(state, payload) {
     state.jwt = payload;
   },
-  clear(state) {
+  clearJWT(state) {
     state.jwt = null;
   },
   changeViewHamburgerMenu(state) {

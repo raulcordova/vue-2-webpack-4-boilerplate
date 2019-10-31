@@ -28,6 +28,7 @@ export default {
 };
 </script>
 <style lang="stylus">
+maxWidthSmartPhone = 720px
 .button_add_item
   background-color #2e86de !important
   right 50px
@@ -38,4 +39,8 @@ export default {
   .md-icon-font
     color: white !important
     font-size 30px !important
+  @media screen and (max-width: maxWidthSmartPhone )
+    right 10px
+    bottom 10px
+    top unset  
 </style>

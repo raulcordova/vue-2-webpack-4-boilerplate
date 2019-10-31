@@ -1,11 +1,11 @@
 <template lang="pug">
     div#moduloPrincipal
-      h1 Episodios
+      h1 Episodios de {{titlePodcast}}
       md-button#button_plus.md-icon-button.md-raised.button_add_item(@click='addModal')
         md-icon add 
       CpEpisodeDeleteConfirm(:showDialogConfirm.sync="showConfirmModal" :messageConfirm.sync="messageConfirm" :codBrandDelete.sync="codBrandDelete")
       CpEpisodeModal(:showDialog.sync='showDialog',:item='item')
-      CpModuloBase(v-if="arListItemsLength", labelModule='Crear tu episodio',descriptionModule='Registra aquí los episodios de los podcast', buttonModule='Crear tu primer episodio', :openModal='addModal')
+      CpModuloBase(v-if="arListItemsLength", labelModule='Crear tu primer episodio',descriptionModule='Registra aquí los episodios del podcast', buttonModule='Crear tu primer episodio', :openModal='addModal')
       div.md-layout
         template(v-for="item in arListItems")
           CpEpisode(:item="item", icon='music_note' )
@@ -31,7 +31,9 @@ export default {
       messageConfirm: "",
       codBrandDelete: "",
       showDialog: false,
-      showConfirmModal: false
+      showConfirmModal: false,
+      titlePodcast: "",
+      codPodcast: ""
     };
   },
   computed: {
@@ -40,14 +42,15 @@ export default {
     }
   },
   created: function() {
+    this.titlePodcast = this.$route.params.name;
+    this.codPodcast = this.$route.params.id;
     this.setList();
   },
   methods: {
     ...mapActions("episode", ["getList"]),
     async setList() {
-      return false;
       this.$store.commit("user/changeLoader");
-      this.getList("2e8ab6ba-f5d6-11e9-a8f2-80ce62387992")
+      this.getList(this.codPodcast)
         .then(res => {
           this.arListItems = res.data.data;
           this.$store.commit("user/changeLoader");
@@ -67,16 +70,19 @@ export default {
     },
     setDefaultItem() {
       return {
-        cod_brand: "",
-        name: "",
+        cod_episode: "",
+        title: "",
         description: "",
-        icon: "",
-        audio: "",
-        code: "",
-        date_register: "",
-        date_publish: "2019-10-29",
         author: "",
-        tags: ["salsa", "rock", "balada"]
+        image: "",
+        duration: "",
+        tags: [],
+        cod_podcast: "",
+        audio: "",
+        url_audio: "",
+        date_register: "",
+        date_publish: this.$moment().format("YYYY-MM-DD"),
+        srcMP3: ""
       };
     },
     setItemDelete(item) {

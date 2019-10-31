@@ -8,39 +8,39 @@ import VwPodcasts from "@/views/VwPodcasts";
 import VwEpisodes from "@/views/VwEpisodes";
 
 const routes = [{
-    path: "/login",
-    component: LyEmpty,
-    children: [{
+  path: "/login",
+  component: LyEmpty,
+  children: [{
+    path: "",
+    name: "Welcome",
+    component: VwHome
+  }]
+}, {
+  path: "/",
+  component: LyDashboard,
+  children: [{
       path: "",
-      name: "Welcome",
-      component: VwHome
-    }]
-  },
-  {
-    path: "/",
-    component: LyDashboard,
-    children: [{
-        path: "",
-        name: "DashboardHome",
-        component: VwDashboardHome
-      },
-      {
-        path: "brands",
-        name: "Brands",
-        component: VwBrands
-      },
-      {
-        path: "podcasts",
-        name: "Podcasts",
-        component: VwPodcasts
-      },
-      {
-        path: "podcast/episodes",
-        name: "Episodes",
-        component: VwEpisodes
-      }
-    ]
-  }
-];
+      name: "DashboardHome",
+      component: VwDashboardHome,
+      redirect: 'podcasts'
+    },
+    {
+      path: "brands",
+      name: "Brands",
+      component: VwBrands
+    },
+    {
+      path: "podcasts",
+      name: "Podcasts",
+      component: VwPodcasts
+    },
+    {
+      path: "podcasts/episodes/:id/:name",
+      name: "Episodes",
+      component: VwEpisodes
+    }
+  ]
+}];
+
 
 export default routes;

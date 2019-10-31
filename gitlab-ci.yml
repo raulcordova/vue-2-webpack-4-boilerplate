@@ -1,0 +1,37 @@
+image: node:8-alpine
+
+stages:
+  - build
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+
+Build:
+  stage: build
+  script:
+    - npm install
+    - CI=false npm run build
+  artifacts:
+    when: on_success
+    paths:
+      - dist/
+    expire_in: 1 week
+  only:
+    - dev
+  tags:
+    - docker
+
+Deploy:
+  image: registry.gitlab.ec.pe/infraestructura/imagesci/awscli/awscli-s3
+  stage: deploy
+  dependencies:
+    - Build
+  script:
+    - cd dist/
+    - aws s3 sync . s3://dev-webpodcast-ec/  --metadata-directive REPLACE --expires 2034-01-01T00:00:00Z --cache-control max-age=300
+  only:
+    - dev
+  tags:
+    - docker
