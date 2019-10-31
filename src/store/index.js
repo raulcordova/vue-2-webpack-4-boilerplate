@@ -17,8 +17,8 @@ export default new Vuex.Store({
   modules: {
     user,
     brand,
-    episode,
-    podcast
+    podcast,
+    episode
   },
   plugins: [
     createPersistedState({

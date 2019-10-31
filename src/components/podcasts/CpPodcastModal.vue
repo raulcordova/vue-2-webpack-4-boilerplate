@@ -16,7 +16,7 @@
             md-option(:value="item.cod_brand") {{item.name}}
         span.md-error(v-if='!$v.item.cod_brand.required') requerido
         span.md-error(v-else-if='!$v.item.cod_brand.minLength') mínimo 3 caracteres                            
-      md-field(:class="getValidationClass('image')")
+      md-field(:class="getValidationClass('imagen')")
         label Imagen
         md-file(v-model='item.imagen' placeholder='Cargar la imagen del podcast' accept="image/*",@change="changeFile")                  
         span.md-error(v-if='!$v.item.imagen.required') requerido
@@ -25,7 +25,13 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { validationMixin } from "vuelidate";
-import { required, url, minLength } from "vuelidate/lib/validators";
+import {
+  required,
+  requiredUnless,
+  requiredIf,
+  url,
+  minLength
+} from "vuelidate/lib/validators";
 import CpModalBase from "@/components/base/modulo/CpModalBase";
 import uploadS3 from "@/s3";
 
@@ -36,6 +42,11 @@ export default {
     return {
       arListAuthor: ["Luis Chikana", "Renzo Carpio", "Juan Carlos"]
     };
+  },
+  computed: {
+    isOptionalImage() {
+      return false; // some conditional logic here...
+    }
   },
   props: {
     showDialog: {},
@@ -66,7 +77,9 @@ export default {
         minLength: minLength(3)
       },
       imagen: {
-        required
+        required: requiredIf(function(nestedModel) {
+          return this.cod_podcast == "" ? true : false;
+        })
       },
       cod_brand: {
         required
@@ -123,7 +136,11 @@ export default {
     actionDialog() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        uploadS3(this.fileImage, this.urlImage, this.actionAPI);
+        if (this.fileImage) {
+          uploadS3(this.fileImage, this.urlImage, this.actionAPI);
+        } else {
+          this.actionAPI();
+        }
       }
     },
     getList() {

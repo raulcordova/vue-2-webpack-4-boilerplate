@@ -78,7 +78,7 @@ export default {
   }, cod_episode) {
     return new Promise((resolve, reject) => {
       axios
-        .delete("/brand/delete?cod_episode=" + cod_episode)
+        .delete("/episode/delete?cod_episode=" + cod_episode)
         .then(res => {
           console.log(res.data);
           if (res.data.data) {
