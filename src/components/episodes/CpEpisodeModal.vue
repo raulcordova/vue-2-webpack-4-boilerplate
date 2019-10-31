@@ -1,11 +1,11 @@
 <template lang="pug">
    CpModalBase(modalTitle='Episodio',:showDialog.sync='showDialog',:closeDialog='onCloseModal', :actionDialog='actionDialog' :getList='getList')
     .form
-      md-field(:class="getValidationClass('name')")
+      md-field(:class="getValidationClass('title')")
         label Título
-        md-input(v-model='item.name')
-        span.md-error(v-if='!$v.item.name.required') requerido
-        span.md-error(v-else-if='!$v.item.name.minLength') mínimo 3 caracteres
+        md-input(v-model='item.title')
+        span.md-error(v-if='!$v.item.title.required') requerido
+        span.md-error(v-else-if='!$v.item.title.minLength') mínimo 3 caracteres
       md-field
         label Descripción
         md-textarea(v-model='item.description')        
@@ -15,7 +15,8 @@
         span.md-error(v-if='!$v.item.icon.required') requerido
       md-field(:class="getValidationClass('audio')")
         label Audio
-        md-file(v-model='item.audio' placeholder='Cargar el audio del episodio' accept="audio/*")                  
+        Duration(:src='item.srcMP3' :setItemDuration='setItemDuration')
+        md-file(v-model='item.audio' placeholder='Cargar el audio del episodio' accept="audio/*" @change="seleccionarAudio")                  
         span.md-error(v-if='!$v.item.audio.required') requerido
       md-autocomplete(:class="getValidationClass('author')",v-model='item.author',md-dense, :md-options="arListAuthor")
         label Autor
@@ -23,19 +24,20 @@
       md-datepicker(:class="getValidationClass('date_publish')", v-model='item.date_publish' md-immediately)
         label Fecha de publicación
         span.md-error(v-if='!$v.item.date_publish.required') requerido
-      md-chips(v-model='item.tags' md-placeholder='Agregar Tags...')                            
+      md-chips(v-model='item.tags' md-placeholder='Tags...')                            
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required, url, minLength } from "vuelidate/lib/validators";
 import CpModalBase from "@/components/base/modulo/CpModalBase";
+import Duration from "@/components/duration";
 export default {
-  components: { CpModalBase },
+  components: { CpModalBase, Duration },
   mixins: [validationMixin],
   data: function() {
     return {
-      arListAuthor: ["Luis Chikana", "Renzo Carpio", "Juan Carlos"]
+      arListAuthor: ["Luis Chicana", "Renzo Carpio", "Juan Carlos"]
     };
   },
   props: {
@@ -44,27 +46,26 @@ export default {
     item: {
       default: function() {
         return {
-          cod_brand: "",
-          name: "",
+          cod_episode: "",
+          title: "",
           description: "",
-          icon: "",
-          audio: "",
-          code: "",
-          date_register: "",
-          date_publish: "2019-10-28",
           author: "",
-          tags: ["salsa", "rock", "balada"]
+          image: "",
+          duration: "",
+          tags: [],
+          cod_podcast: "",
+          audio: "",
+          url_audio: "",
+          date_register: "",
+          date_publish: "",
+          srcMP3: ""
         };
       }
     }
   },
   validations: {
     item: {
-      code: {
-        required,
-        minLength: minLength(3)
-      },
-      name: {
+      title: {
         required,
         minLength: minLength(3)
       },
@@ -83,7 +84,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("brand", ["add", "edit"]),
+    ...mapActions("episode", ["add", "edit"]),
     getValidationClass(fieldName) {
       const field = this.$v.item[fieldName];
       if (field) {
@@ -91,6 +92,11 @@ export default {
           "md-invalid": field.$invalid && field.$dirty
         };
       }
+    },
+    seleccionarAudio(e) {
+      let fileArchivo = e.target.files[0];
+      let generateURL = URL.createObjectURL(fileArchivo);
+      this.item.srcMP3 = generateURL;
     },
     actionDialog() {
       this.$v.$touch();
@@ -126,6 +132,9 @@ export default {
     onCloseModal() {
       this.$v.$reset();
       this.$parent.switchShowBrandModal();
+    },
+    setItemDuration(duration) {
+      this.item.duration = duration;
     }
   }
 };

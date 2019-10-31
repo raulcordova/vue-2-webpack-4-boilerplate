@@ -9,13 +9,16 @@ import routes from "./routes";
 import store from './store';
 import VueAxios from "vue-axios";
 import VueMaterial from 'vue-material';
+import vueMoment from "vue-moment";
+import UUID from 'vue-uuid';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
-import UUID from 'vue-uuid';
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(VueMaterial);
+Vue.use(vueMoment);
 Vue.use(UUID);
+
 
 
 const filter = function (text, length, clamp) {

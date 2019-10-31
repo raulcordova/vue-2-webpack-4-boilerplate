@@ -1,5 +1,5 @@
 <template lang="pug">
-    CpItemBase(:icon='icon', :item='item', :editAction='showModalEdit' :deleteAction='showDeleteConfirm')
+    CpItemBase(:icon='icon',:name='item.title' :item='item', :editAction='showModalEdit' :deleteAction='showDeleteConfirm')
 </template>
 <script>
 import CpItemBase from "@/components/base/modulo/CpItemBase";

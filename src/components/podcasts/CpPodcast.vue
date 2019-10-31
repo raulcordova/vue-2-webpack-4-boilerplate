@@ -29,7 +29,7 @@ export default {
     actionRedirect() {
       const cod_podcast = this.item.cod_podcast;
       const url = "/podcasts/episodes/" + cod_podcast + "/" + this.item.name;
-      console.log(url);
+      //console.log(url);
       this.$router.push(url);
     }
   }
