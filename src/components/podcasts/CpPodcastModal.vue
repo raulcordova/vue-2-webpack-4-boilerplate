@@ -116,6 +116,7 @@ export default {
         this.add(this.item)
           .then(res => {
             this.getList();
+            this.$store.commit("user/changeLoader");
           })
           .catch(() => {
             this.$store.commit("user/changeLoader");
